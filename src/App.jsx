@@ -1,35 +1,78 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useWeather } from './hooks/useWeather';
+import SearchBar from './components/SearchBar';
+import WeatherCard from './components/WeatherCard';
+import LoadingState from './components/LoadingState';
+import ErrorState from './components/ErrorState';
+import './App.css';
+import './styles/WeatherCard.css';
+import './styles/SearchBar.css';
+import './styles/LoadingState.css';
+import './styles/ErrorState.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const {
+    weatherData,
+    loading,
+    error,
+    backgroundClass,
+    loadWeatherByCity,
+    loadCurrentLocation,
+    retry
+  } = useWeather();
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className={`app ${backgroundClass}`}>
+      <div className="container">
+        {/* Header */}
+        <header className="app-header">
+          <div className="app-logo">
+            <span className="logo-icon">🌤️</span>
+          </div>
+          <h1 className="app-title">WeatherNow</h1>
+          <p className="app-tagline">Your daily weather companion</p>
+        </header>
+
+        {/* Search Bar */}
+        <SearchBar 
+          onSearch={loadWeatherByCity}
+          onLocationRequest={loadCurrentLocation}
+          isLoading={loading}
+        />
+
+        {/* Main Content */}
+        <main>
+          {loading && <LoadingState type="spinner" />}
+          
+          {error && !loading && (
+            <ErrorState 
+              error={error} 
+              onRetry={retry}
+            />
+          )}
+          
+          {!loading && !error && weatherData && (
+            <WeatherCard data={weatherData} />
+          )}
+        </main>
+
+        {/* Footer */}
+        {weatherData && !loading && (
+          <footer style={{ 
+            textAlign: 'center', 
+            marginTop: '48px',
+            padding: '24px',
+            color: 'var(--color-text-muted)',
+            fontSize: '14px'
+          }}>
+            <p>Last updated: {new Date().toLocaleTimeString()}</p>
+            <p style={{ marginTop: '8px' }}>
+              Data provided by OpenWeatherMap
+            </p>
+          </footer>
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
