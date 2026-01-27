@@ -1,13 +1,18 @@
 import PropTypes from 'prop-types';
 import { 
-  getWeatherIconClass, 
+  getWeatherIcon, 
   getWeatherMessage, 
   convertWindSpeed, 
   getWindDirection,
-  isNightTime
+  isNightTime,
+  getWeatherIconConfig,
+  getDetailIcon,
+  getDetailIconColor,
+  getTemperatureColor
 } from '../utils/weatherUtils';
 import { formatTime } from '../utils/dateUtils';
 import '../styles/WeatherCard.css';
+import { MdLocationOn } from "react-icons/md";
 
 export default function WeatherCard({ data }) {
   const temp = Math.round(data.main.temp);
@@ -18,27 +23,51 @@ export default function WeatherCard({ data }) {
   const isNight = isNightTime(data.dt, data.sys.sunrise, data.sys.sunset);
 
   const weatherMessage = getWeatherMessage(temp, weatherMain, weatherDescription);
-  const weatherIconClass = getWeatherIconClass(weatherMain, weatherId, isNight);
+  
+  // Get the WeatherIcon component from weatherUtils
+  const WeatherIcon = getWeatherIcon(weatherMain, weatherId, isNight);
+  const iconConfig = getWeatherIconConfig('large');
+  
+  // Get detail icons
+  const HumidityIcon = getDetailIcon('humidity');
+  const WindIcon = getDetailIcon('wind');
+  const PressureIcon = getDetailIcon('pressure');
+  const VisibilityIcon = getDetailIcon('visibility');
+  const SunriseIcon = getDetailIcon('sunrise');
+  const SunsetIcon = getDetailIcon('sunset');
+
+  // Get icon colors
+  const humidityColor = getDetailIconColor('humidity');
+  const windColor = getDetailIconColor('wind');
+  const pressureColor = getDetailIconColor('pressure');
+  const visibilityColor = getDetailIconColor('visibility');
+  const sunriseColor = getDetailIconColor('sunrise');
+  const sunsetColor = getDetailIconColor('sunset');
+  const tempColor = getTemperatureColor(temp);
 
   return (
     <div className="weather-card glass-card fade-in">
       {/* Location */}
       <div className="location">
-        <h2 className="location-name">
-          <i className="wi wi-map-marker location-icon-weather"></i>
-          {data.name}
-        </h2>
-        <span className="location-country">{data.sys.country}</span>
-      </div>
+  <h2 className="location-name">
+    <span className="location-icon-weather">
+      <MdLocationOn />
+    </span>
+    {data.name}
+  </h2>
+  <span className="location-country">{data.sys.country}</span>
+</div>
 
       {/* Temperature Section */}
       <div className="temperature-section">
         <div className="weather-icon-large">
-          <i className={weatherIconClass}></i>
+          {WeatherIcon && <WeatherIcon size={iconConfig.size} color={iconConfig.color} />}
         </div>
         
         <div className="temperature-main">
-          <span className="temperature-value">{temp}</span>
+          <span className="temperature-value" style={{ color: tempColor }}>
+            {temp}
+          </span>
           <span className="temperature-unit">°C</span>
         </div>
 
@@ -47,7 +76,9 @@ export default function WeatherCard({ data }) {
         <div className="weather-message">{weatherMessage}</div>
 
         <div className="feels-like">
-          Feels like <strong>{feelsLike}°C</strong>
+          Feels like <strong style={{ color: getTemperatureColor(feelsLike) }}>
+            {feelsLike}°C
+          </strong>
         </div>
       </div>
 
@@ -56,7 +87,7 @@ export default function WeatherCard({ data }) {
         {/* Humidity */}
         <div className="detail-item">
           <div className="detail-icon">
-            <i className="wi wi-humidity"></i>
+            {HumidityIcon && <HumidityIcon size={24} color={humidityColor} />}
           </div>
           <div className="detail-label">Humidity</div>
           <div className="detail-value">
@@ -68,7 +99,7 @@ export default function WeatherCard({ data }) {
         {/* Wind Speed */}
         <div className="detail-item">
           <div className="detail-icon">
-            <i className="wi wi-strong-wind"></i>
+            {WindIcon && <WindIcon size={24} color={windColor} />}
           </div>
           <div className="detail-label">Wind</div>
           <div className="detail-value">
@@ -83,7 +114,7 @@ export default function WeatherCard({ data }) {
         {/* Pressure */}
         <div className="detail-item">
           <div className="detail-icon">
-            <i className="wi wi-barometer"></i>
+            {PressureIcon && <PressureIcon size={24} color={pressureColor} />}
           </div>
           <div className="detail-label">Pressure</div>
           <div className="detail-value">
@@ -95,7 +126,7 @@ export default function WeatherCard({ data }) {
         {/* Visibility */}
         <div className="detail-item">
           <div className="detail-icon">
-            <i className="wi wi-day-fog"></i>
+            {VisibilityIcon && <VisibilityIcon size={24} color={visibilityColor} />}
           </div>
           <div className="detail-label">Visibility</div>
           <div className="detail-value">
@@ -107,7 +138,7 @@ export default function WeatherCard({ data }) {
         {/* Sunrise */}
         <div className="detail-item">
           <div className="detail-icon">
-            <i className="wi wi-sunrise"></i>
+            {SunriseIcon && <SunriseIcon size={24} color={sunriseColor} />}
           </div>
           <div className="detail-label">Sunrise</div>
           <div className="detail-value detail-time">
@@ -118,7 +149,7 @@ export default function WeatherCard({ data }) {
         {/* Sunset */}
         <div className="detail-item">
           <div className="detail-icon">
-            <i className="wi wi-sunset"></i>
+            {SunsetIcon && <SunsetIcon size={24} color={sunsetColor} />}
           </div>
           <div className="detail-label">Sunset</div>
           <div className="detail-value detail-time">

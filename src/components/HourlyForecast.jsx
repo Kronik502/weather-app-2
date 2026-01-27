@@ -1,14 +1,19 @@
 import PropTypes from 'prop-types';
-import { getWeatherIconClass } from '../utils/weatherUtils';
+import { getWeatherIcon } from '../utils/weatherUtils';
 import { formatHour } from '../utils/dateUtils';
 import '../styles/HourlyForecast.css';
+
+// Import React Icons for UI elements
+import { WiTime3, WiRaindrop, WiThermometer } from 'react-icons/wi';
 
 export default function HourlyForecast({ hourlyForecast, loading }) {
   if (loading) {
     return (
       <div className="hourly-forecast glass-card">
         <h3 className="forecast-title">
-          <i className="wi wi-time-3"></i>
+          <span className="forecast-title-icon">
+            <WiTime3 size={24} />
+          </span>
           Hourly Forecast
         </h3>
         <div className="forecast-loading">
@@ -25,14 +30,16 @@ export default function HourlyForecast({ hourlyForecast, loading }) {
   return (
     <div className="hourly-forecast glass-card fade-in">
       <h3 className="forecast-title">
-        <i className="wi wi-time-3"></i>
+        <span className="forecast-title-icon">
+          <WiTime3 size={24} />
+        </span>
         Hourly Forecast
       </h3>
 
       <div className="hourly-scroll">
         <div className="hourly-grid">
           {hourlyForecast.map((hour, index) => {
-            const iconClass = getWeatherIconClass(hour.condition, null, false);
+            const WeatherIcon = getWeatherIcon(hour.condition, null, false);
             const timeStr = formatHour(hour.timestamp);
 
             return (
@@ -42,15 +49,21 @@ export default function HourlyForecast({ hourlyForecast, loading }) {
                 </div>
 
                 <div className="hourly-icon">
-                  <i className={iconClass}></i>
+                  {WeatherIcon && <WeatherIcon size={32} />}
                 </div>
 
-                <div className="hourly-temp">{hour.temp}°</div>
+                <div className="hourly-temp">
+                  <span className="hourly-temp-value">{hour.temp}°</span>
+                </div>
 
                 {hour.precipitation > 0 && (
                   <div className="hourly-precipitation">
-                    <i className="wi wi-raindrop"></i>
-                    <span>{hour.precipitation}%</span>
+                    <span className="hourly-precipitation-icon">
+                      <WiRaindrop size={16} />
+                    </span>
+                    <span className="hourly-precipitation-value">
+                      {hour.precipitation}%
+                    </span>
                   </div>
                 )}
               </div>

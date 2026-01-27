@@ -1,99 +1,174 @@
 /**
- * Weather Icons Mapping
- * Using weather-icons library by Erik Flowers
- * Documentation: https://erikflowers.github.io/weather-icons/
+ * React Icons Weather Mapping
+ * Using react-icons/wi (Weather Icons)
  */
 
+// Import React Icons with correct names
+import { 
+  WiDaySunny,
+  WiNightClear,
+  WiDayCloudy,
+  WiNightAltCloudy,
+  WiCloud,
+  WiCloudy,
+  WiRain,
+  WiRainMix,
+  WiSnow,
+  WiThunderstorm,
+  WiFog,
+  WiHail,
+  WiWindy,
+  WiDust,
+  WiSmoke,
+  WiSandstorm,
+  WiVolcano,
+  WiTornado,
+  WiStrongWind,
+  WiRaindrops,
+  WiSprinkle,
+  WiSleet,
+  WiSnowWind,
+  WiDayRain,
+  WiNightAltRain,
+  WiDaySnow,
+  WiNightAltSnow,
+  WiDayThunderstorm,
+  WiNightAltThunderstorm,
+  WiDayFog,
+  WiNightFog,
+  WiDayHaze,
+  WiDaySprinkle,
+  WiNightAltSprinkle,
+  WiHumidity,
+  WiBarometer,
+  WiSunrise,
+  WiSunset,
+  WiThermometer,
+  WiTime3,
+  WiNa,
+  WiCelsius,
+  WiFahrenheit
+} from 'react-icons/wi';
+
 /**
- * Map OpenWeather condition code to weather-icons class
+ * Map OpenWeather condition code to React Icon component
  */
-export const getWeatherIconClass = (weatherMain, weatherId, isNight = false) => {
+export const getWeatherIcon = (weatherMain, weatherId, isNight = false) => {
   // Night icons
   if (isNight) {
     const nightIcons = {
-      Clear: 'wi-night-clear',
-      Clouds: 'wi-night-alt-cloudy',
-      Rain: 'wi-night-alt-rain',
-      Drizzle: 'wi-night-alt-sprinkle',
-      Thunderstorm: 'wi-night-alt-thunderstorm',
-      Snow: 'wi-night-alt-snow',
-      Mist: 'wi-night-fog',
-      Smoke: 'wi-night-fog',
-      Haze: 'wi-night-fog',
-      Dust: 'wi-dust',
-      Fog: 'wi-night-fog',
-      Sand: 'wi-dust',
-      Ash: 'wi-dust',
-      Squall: 'wi-strong-wind',
-      Tornado: 'wi-tornado'
+      Clear: WiNightClear,
+      Clouds: WiNightAltCloudy,
+      Rain: WiNightAltRain,
+      Drizzle: WiNightAltSprinkle,
+      Thunderstorm: WiNightAltThunderstorm,
+      Snow: WiNightAltSnow,
+      Mist: WiNightFog,
+      Smoke: WiNightFog,
+      Haze: WiNightFog,
+      Dust: WiDust,
+      Fog: WiNightFog,
+      Sand: WiDust,
+      Ash: WiDust,
+      Squall: WiStrongWind,
+      Tornado: WiTornado
     };
-    return `wi ${nightIcons[weatherMain] || 'wi-night-clear'}`;
+    return nightIcons[weatherMain] || WiNightClear;
   }
 
   // Day icons based on main weather condition
   const iconMap = {
-    Clear: 'wi-day-sunny',
-    Clouds: 'wi-day-cloudy',
-    Rain: 'wi-day-rain',
-    Drizzle: 'wi-day-sprinkle',
-    Thunderstorm: 'wi-day-thunderstorm',
-    Snow: 'wi-day-snow',
-    Mist: 'wi-day-fog',
-    Smoke: 'wi-smoke',
-    Haze: 'wi-day-haze',
-    Dust: 'wi-dust',
-    Fog: 'wi-day-fog',
-    Sand: 'wi-dust',
-    Ash: 'wi-dust',
-    Squall: 'wi-strong-wind',
-    Tornado: 'wi-tornado'
+    Clear: WiDaySunny,
+    Clouds: WiDayCloudy,
+    Rain: WiDayRain,
+    Drizzle: WiDaySprinkle,
+    Thunderstorm: WiDayThunderstorm,
+    Snow: WiDaySnow,
+    Mist: WiDayFog,
+    Smoke: WiSmoke,
+    Haze: WiDayHaze,
+    Dust: WiDust,
+    Fog: WiDayFog,
+    Sand: WiDust,
+    Ash: WiDust,
+    Squall: WiStrongWind,
+    Tornado: WiTornado
   };
 
   // Detailed mapping based on weather ID for more accuracy
   if (weatherId) {
     // Thunderstorm (200-232)
     if (weatherId >= 200 && weatherId < 300) {
-      return `wi ${isNight ? 'wi-night-alt-thunderstorm' : 'wi-day-thunderstorm'}`;
+      return isNight ? WiNightAltThunderstorm : WiDayThunderstorm;
     }
     // Drizzle (300-321)
     if (weatherId >= 300 && weatherId < 400) {
-      return `wi ${isNight ? 'wi-night-alt-sprinkle' : 'wi-day-sprinkle'}`;
+      return isNight ? WiNightAltSprinkle : WiDaySprinkle;
     }
     // Rain (500-531)
     if (weatherId >= 500 && weatherId < 600) {
-      if (weatherId === 511) return 'wi wi-rain-mix'; // Freezing rain
-      return `wi ${isNight ? 'wi-night-alt-rain' : 'wi-day-rain'}`;
+      if (weatherId === 511) return WiRainMix; // Freezing rain
+      if (weatherId === 520 || weatherId === 521 || weatherId === 522) return WiRaindrops; // Shower rain
+      return isNight ? WiNightAltRain : WiDayRain;
     }
     // Snow (600-622)
     if (weatherId >= 600 && weatherId < 700) {
       if (weatherId === 611 || weatherId === 612 || weatherId === 613) {
-        return 'wi wi-sleet'; // Sleet
+        return WiSleet; // Sleet
       }
-      return `wi ${isNight ? 'wi-night-alt-snow' : 'wi-day-snow'}`;
+      if (weatherId === 621 || weatherId === 622) return WiSnowWind; // Snow shower/heavy snow
+      return isNight ? WiNightAltSnow : WiDaySnow;
     }
     // Atmosphere (700-781)
     if (weatherId >= 700 && weatherId < 800) {
-      if (weatherId === 701 || weatherId === 741) return `wi ${isNight ? 'wi-night-fog' : 'wi-day-fog'}`;
-      if (weatherId === 711) return 'wi wi-smoke';
-      if (weatherId === 731 || weatherId === 761) return 'wi wi-dust';
-      if (weatherId === 751) return 'wi wi-sandstorm';
-      if (weatherId === 762) return 'wi wi-volcano';
-      if (weatherId === 771) return 'wi wi-strong-wind';
-      if (weatherId === 781) return 'wi wi-tornado';
+      if (weatherId === 701 || weatherId === 741) return isNight ? WiNightFog : WiDayFog;
+      if (weatherId === 711) return WiSmoke;
+      if (weatherId === 721) return WiDayHaze;
+      if (weatherId === 731 || weatherId === 761) return WiDust;
+      if (weatherId === 751 || weatherId === 761) return WiSandstorm;
+      if (weatherId === 762) return WiVolcano;
+      if (weatherId === 771) return WiStrongWind;
+      if (weatherId === 781) return WiTornado;
     }
     // Clear (800)
     if (weatherId === 800) {
-      return `wi ${isNight ? 'wi-night-clear' : 'wi-day-sunny'}`;
+      return isNight ? WiNightClear : WiDaySunny;
     }
     // Clouds (801-804)
     if (weatherId > 800 && weatherId < 900) {
-      if (weatherId === 801) return `wi ${isNight ? 'wi-night-alt-cloudy' : 'wi-day-cloudy'}`;
-      if (weatherId === 802) return `wi ${isNight ? 'wi-night-alt-cloudy' : 'wi-day-cloudy'}`;
-      if (weatherId === 803 || weatherId === 804) return 'wi wi-cloudy';
+      if (weatherId === 801) return isNight ? WiNightAltCloudy : WiDayCloudy;
+      if (weatherId === 802) return WiCloud;
+      if (weatherId === 803 || weatherId === 804) return WiCloudy;
     }
   }
 
-  return `wi ${iconMap[weatherMain] || 'wi-day-sunny'}`;
+  return iconMap[weatherMain] || WiDaySunny;
+};
+
+/**
+ * Get weather icon size and color configuration
+ */
+export const getWeatherIconConfig = (size = 'large') => {
+  const sizes = {
+    small: { 
+      size: 24, 
+      color: '#94a3b8' // var(--color-text-muted)
+    },
+    medium: { 
+      size: 36, 
+      color: '#cbd5e1' // var(--color-text-secondary)
+    },
+    large: { 
+      size: 96, 
+      color: '#38bdf8' // var(--color-primary) - Updated to light blue
+    },
+    xlarge: { 
+      size: 120, 
+      color: '#38bdf8' // var(--color-primary) - Updated to light blue
+    }
+  };
+  
+  return sizes[size] || sizes.medium;
 };
 
 /**
@@ -136,13 +211,13 @@ export const getWeatherBackground = (weatherMain, isNight) => {
     Clouds: 'cloudy',
     Rain: 'rainy',
     Drizzle: 'rainy',
-    Thunderstorm: 'rainy',
+    Thunderstorm: 'thunder', // Updated to match new thunder class
     Snow: 'snow',
-    Mist: 'cloudy',
-    Smoke: 'cloudy',
-    Haze: 'cloudy',
+    Mist: 'fog', // Updated to match new fog class
+    Smoke: 'fog',
+    Haze: 'fog',
     Dust: 'cloudy',
-    Fog: 'cloudy',
+    Fog: 'fog',
     Sand: 'cloudy',
     Ash: 'cloudy',
     Squall: 'rainy',
@@ -207,10 +282,12 @@ export const getWindDirection = (degrees) => {
 };
 
 /**
- * Get wind direction icon class
+ * Get wind icon based on speed
  */
-export const getWindDirectionIcon = (degrees) => {
-  return `wi wi-wind towards-${degrees}-deg`;
+export const getWindIcon = (speed) => {
+  const mps = speed;
+  if (mps < 5) return WiWindy;
+  return WiStrongWind;
 };
 
 /**
@@ -224,23 +301,56 @@ export const convertWindSpeed = (mps) => {
  * Get UV Index description
  */
 export const getUVIndexDescription = (uvi) => {
-  if (uvi <= 2) return { level: 'Low', color: '#4CAF50' };
-  if (uvi <= 5) return { level: 'Moderate', color: '#FFEB3B' };
-  if (uvi <= 7) return { level: 'High', color: '#FF9800' };
-  if (uvi <= 10) return { level: 'Very High', color: '#F44336' };
-  return { level: 'Extreme', color: '#9C27B0' };
+  if (uvi <= 2) return { 
+    level: 'Low', 
+    color: '#10b981' // var(--color-success) - Updated
+  };
+  if (uvi <= 5) return { 
+    level: 'Moderate', 
+    color: '#f59e0b' // var(--color-warning) - Updated
+  };
+  if (uvi <= 7) return { 
+    level: 'High', 
+    color: '#f97316' // var(--color-temp-warm) - Updated
+  };
+  if (uvi <= 10) return { 
+    level: 'Very High', 
+    color: '#ef4444' // var(--color-error) - Updated
+  };
+  return { 
+    level: 'Extreme', 
+    color: '#9c27b0' // Updated to purple for extreme
+  };
 };
 
 /**
  * Get air quality description
  */
 export const getAirQualityDescription = (aqi) => {
-  if (aqi === 1) return { level: 'Good', color: '#4CAF50' };
-  if (aqi === 2) return { level: 'Fair', color: '#8BC34A' };
-  if (aqi === 3) return { level: 'Moderate', color: '#FFEB3B' };
-  if (aqi === 4) return { level: 'Poor', color: '#FF9800' };
-  if (aqi === 5) return { level: 'Very Poor', color: '#F44336' };
-  return { level: 'Unknown', color: '#9E9E9E' };
+  if (aqi === 1) return { 
+    level: 'Good', 
+    color: '#10b981' // var(--color-success)
+  };
+  if (aqi === 2) return { 
+    level: 'Fair', 
+    color: '#8bc34a' // Updated to match theme
+  };
+  if (aqi === 3) return { 
+    level: 'Moderate', 
+    color: '#f59e0b' // var(--color-warning)
+  };
+  if (aqi === 4) return { 
+    level: 'Poor', 
+    color: '#f97316' // var(--color-temp-warm)
+  };
+  if (aqi === 5) return { 
+    level: 'Very Poor', 
+    color: '#ef4444' // var(--color-error)
+  };
+  return { 
+    level: 'Unknown', 
+    color: '#94a3b8' // var(--color-text-muted)
+  };
 };
 
 /**
@@ -261,6 +371,73 @@ export const formatTemperature = (temp, unit = 'C') => {
 };
 
 /**
+ * Get temperature color based on value
+ */
+export const getTemperatureColor = (temp) => {
+  if (temp >= 35) return '#ef4444'; // var(--color-temp-hot)
+  if (temp >= 30) return '#f97316'; // var(--color-temp-warm)
+  if (temp >= 25) return '#f59e0b'; // var(--color-temp-mild)
+  if (temp >= 20) return '#38bdf8'; // var(--color-primary)
+  if (temp >= 15) return '#60a5fa'; // var(--color-temp-cool)
+  if (temp >= 10) return '#93c5fd'; // var(--color-temp-cold)
+  if (temp >= 0) return '#38bdf8'; // var(--color-primary)
+  return '#60a5fa'; // var(--color-temp-cold)
+};
+
+/**
+ * Get icon for time of day (sunrise/sunset)
+ */
+export const getTimeIcon = (timeType) => {
+  if (timeType === 'sunrise') return WiSunrise;
+  if (timeType === 'sunset') return WiSunset;
+  return WiDaySunny;
+};
+
+/**
+ * Get icon for weather details
+ */
+export const getDetailIcon = (detailType) => {
+  const icons = {
+    humidity: WiHumidity,
+    pressure: WiBarometer,
+    visibility: WiDayFog,
+    wind: WiStrongWind,
+    sunrise: WiSunrise,
+    sunset: WiSunset,
+    uvi: WiDaySunny,
+    feelsLike: WiThermometer,
+    clouds: WiCloud,
+    dewPoint: WiHumidity,
+    rain: WiRain,
+    snow: WiSnow
+  };
+  
+  return icons[detailType] || WiDaySunny;
+};
+
+/**
+ * Get detail icon color based on type
+ */
+export const getDetailIconColor = (detailType) => {
+  const colors = {
+    humidity: '#22d3ee', // var(--color-humidity)
+    pressure: '#c084fc', // var(--color-pressure)
+    visibility: '#94a3b8', // var(--color-text-muted)
+    wind: '#a78bfa', // var(--color-wind)
+    sunrise: '#f59e0b', // var(--color-temp-mild)
+    sunset: '#f97316', // var(--color-temp-warm)
+    uvi: '#fbbf24', // var(--color-uv-high)
+    feelsLike: '#38bdf8', // var(--color-primary)
+    clouds: '#cbd5e1', // var(--color-text-secondary)
+    dewPoint: '#22d3ee', // var(--color-humidity)
+    rain: '#60a5fa', // var(--color-temp-cool)
+    snow: '#93c5fd' // var(--color-temp-cold)
+  };
+  
+  return colors[detailType] || '#38bdf8'; // var(--color-primary)
+};
+
+/**
  * Debounce function for search input
  */
 export const debounce = (func, delay) => {
@@ -269,4 +446,29 @@ export const debounce = (func, delay) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => func(...args), delay);
   };
+};
+
+/**
+ * Get weather condition color
+ */
+export const getWeatherConditionColor = (weatherMain, isNight = false) => {
+  const colors = {
+    Clear: isNight ? '#60a5fa' : '#38bdf8', // Blue tones
+    Clouds: '#94a3b8', // Gray
+    Rain: '#1e40af', // Dark blue
+    Drizzle: '#3b82f6', // Medium blue
+    Thunderstorm: '#7c3aed', // Purple
+    Snow: '#93c5fd', // Light blue
+    Mist: '#64748b', // Slate
+    Smoke: '#94a3b8', // Gray
+    Haze: '#cbd5e1', // Light gray
+    Dust: '#a16207', // Brown
+    Fog: '#64748b', // Slate
+    Sand: '#a16207', // Brown
+    Ash: '#6b7280', // Gray
+    Squall: '#1d4ed8', // Dark blue
+    Tornado: '#7c3aed' // Purple
+  };
+  
+  return colors[weatherMain] || '#38bdf8'; // Default to primary blue
 };

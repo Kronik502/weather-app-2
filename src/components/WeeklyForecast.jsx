@@ -1,14 +1,19 @@
 import PropTypes from 'prop-types';
-import { getWeatherIconClass } from '../utils/weatherUtils';
+import { getWeatherIcon } from '../utils/weatherUtils';
 import { getDayNameFromDateString, getMonthDay } from '../utils/dateUtils';
 import '../styles/WeeklyForecast.css';
+
+// Import React Icons
+import { WiTime4, WiRaindrop } from 'react-icons/wi';
 
 export default function WeeklyForecast({ dailyForecast, loading }) {
   if (loading) {
     return (
       <div className="weekly-forecast glass-card">
         <h3 className="forecast-title">
-          <i className="wi wi-time-4"></i>
+          <span className="forecast-title-icon">
+            <WiTime4 size={24} />
+          </span>
           7-Day Forecast
         </h3>
         <div className="forecast-loading">
@@ -26,13 +31,15 @@ export default function WeeklyForecast({ dailyForecast, loading }) {
   return (
     <div className="weekly-forecast glass-card fade-in">
       <h3 className="forecast-title">
-        <i className="wi wi-time-4"></i>
+        <span className="forecast-title-icon">
+          <WiTime4 size={24} />
+        </span>
         7-Day Forecast
       </h3>
 
       <div className="forecast-grid">
         {dailyForecast.map((day, index) => {
-          const iconClass = getWeatherIconClass(day.condition, null, false);
+          const WeatherIcon = getWeatherIcon(day.condition, null, false);
           const dayName = getDayNameFromDateString(day.date);
           const monthDay = getMonthDay(day.timestamp);
 
@@ -44,7 +51,7 @@ export default function WeeklyForecast({ dailyForecast, loading }) {
               <div className="forecast-date">{monthDay}</div>
               
               <div className="forecast-icon">
-                <i className={iconClass}></i>
+                {WeatherIcon && <WeatherIcon size={32} />}
               </div>
 
               <div className="forecast-condition">{day.condition}</div>
@@ -57,8 +64,12 @@ export default function WeeklyForecast({ dailyForecast, loading }) {
 
               {day.precipitation > 0 && (
                 <div className="forecast-precipitation">
-                  <i className="wi wi-raindrop"></i>
-                  {day.precipitation}%
+                  <span className="precipitation-icon">
+                    <WiRaindrop size={16} />
+                  </span>
+                  <span className="precipitation-value">
+                    {day.precipitation}%
+                  </span>
                 </div>
               )}
             </div>
