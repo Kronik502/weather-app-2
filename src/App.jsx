@@ -4,7 +4,7 @@ import { useForecast } from './hooks/useForecast';
 import ErrorBoundary from './components/ErrorBoundary';
 import SearchBar from './components/SearchBar';
 import WeatherCard from './components/WeatherCard';
-import HourlyForecast from './components/HourlyForecast';
+import HourlyForecast from './components/Hourlyforecast';
 import WeeklyForecast from './components/WeeklyForecast';
 import LoadingState from './components/LoadingState';
 import ErrorState from './components/ErrorState';
@@ -53,7 +53,7 @@ function App() {
     };
   }, []);
 
-  // Hide welcome message after 5 seconds
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowWelcome(false);
