@@ -4,7 +4,7 @@ import { useForecast } from './hooks/useForecast';
 import ErrorBoundary from './components/ErrorBoundary';
 import SearchBar from './components/SearchBar';
 import WeatherCard from './components/WeatherCard';
-import HourlyForecast from './components/Hourlyforecast';
+import HourlyForecast from './components/HourlyForecast';
 import WeeklyForecast from './components/WeeklyForecast';
 import LoadingState from './components/LoadingState';
 import ErrorState from './components/ErrorState';
@@ -14,7 +14,7 @@ import './styles/WeatherCard.css';
 import './styles/SearchBar.css';
 import './styles/LoadingState.css';
 import './styles/ErrorState.css';
-import './styles/HourlyForecast.css';
+import './styles/Hourlyforecast.css';
 import './styles/WeeklyForecast.css';
 import './styles/ErrorBoundary.css';
 
