@@ -157,10 +157,10 @@ export default function WeatherCard({ data }) {
           </div>
 
           {/* Weather Message */}
-          <div className="weather-insight">
+          {/* <div className="weather-insight">
             <WiCloud size={20} />
             <p>{weatherMessage}</p>
-          </div>
+          </div> */}
         </div>
       </div>
 
