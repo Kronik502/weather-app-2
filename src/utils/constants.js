@@ -5,10 +5,10 @@ export const API_ENDPOINTS = {
   REVERSE_GEOCODING: 'https://us1.locationiq.com/v1/reverse'
 };
 
-export const DEFAULT_CITY = 'London';
+export const DEFAULT_CITY = 'Johannesburg';
 export const DEFAULT_COORDS = {
-  lat: 51.5074,
-  lon: -0.1278
+  lat: 26.2056,
+  lon: 28.0337
 };
 
 export const SEARCH_DEBOUNCE_MS = 500;

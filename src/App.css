@@ -50,10 +50,7 @@ body {
   animation: nightTwinkle 10s ease-in-out infinite;
 }
 
-.app.clear {
-  background: var(--gradient-clear);
-  animation: clearSky 5s ease-in-out infinite;
-}
+
 
 .app.snow {
   background: var(--gradient-snow);
