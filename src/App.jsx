@@ -14,7 +14,7 @@ import './styles/WeatherCard.css';
 import './styles/SearchBar.css';
 import './styles/LoadingState.css';
 import './styles/ErrorState.css';
-import './styles/HourlyForecast.css';
+// import './styles/HourlyForecast.css';
 import './styles/WeeklyForecast.css';
 import './styles/ErrorBoundary.css';
 
