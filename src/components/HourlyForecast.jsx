@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { getWeatherIcon } from '../utils/weatherUtils';
 import { formatHour } from '../utils/dateUtils';
-import '../styles/HourlyForecast.css';
+import '../styles/Hourlyforecast.css';
 
 // Import React Icons for UI elements
 import { WiTime3, WiRaindrop, WiThermometer } from 'react-icons/wi';
