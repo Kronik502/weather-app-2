@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { getWeatherIcon, getTemperatureColor } from '../utils/weatherUtils';
 import { formatHour } from '../utils/dateUtils';
-import '../styles/Hourlyforecast.css';
+import '../styles/HourlyForecast.css';
 
 // Import React Icons for UI elements
 import { 
