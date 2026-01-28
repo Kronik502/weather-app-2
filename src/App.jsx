@@ -124,19 +124,19 @@ function App() {
           </div>
         )}
 
-        <div className="container">
-          {/* Welcome Message */}
-          {showWelcome && !weatherData && !loading && !error && (
-            <div className="welcome-message fade-in">
-              <div className="welcome-content">
-                <i className="wi wi-day-sunny welcome-icon"></i>
-                <h2 className="welcome-title">Welcome to WeatherNow</h2>
-                <p className="welcome-text">
-                  Search for a city or use your current location to get started
-                </p>
-              </div>
-            </div>
-          )}
+        // <div className="container">
+        //   {/* Welcome Message */}
+        //   {showWelcome && !weatherData && !loading && !error && (
+        //     <div className="welcome-message fade-in">
+        //       <div className="welcome-content">
+        //         <i className="wi wi-day-sunny welcome-icon"></i>
+        //         <h2 className="welcome-title">Welcome to WeatherNow</h2>
+        //         <p className="welcome-text">
+        //           Search for a city or use your current location to get started
+        //         </p>
+        //       </div>
+        //     </div>
+        //   )}
 
           {/* Header */}
           <header className="app-header">
